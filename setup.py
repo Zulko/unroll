@@ -11,4 +11,4 @@ setup(name='unroll',
     license='see LICENSE.txt',
     keywords="Piano, rolls, transcription, MIDI, video, sheet music",
     packages= find_packages(exclude='docs'),
-    install_requires=['numpy', 'music21'])
+    install_requires=['numpy', 'music21', 'moviepy'])

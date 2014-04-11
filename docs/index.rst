@@ -1,7 +1,7 @@
 Unroll
 =======
 
-Unroll is a command-line tool and Python module for the transcription of piano rolls to sheet music.
+Unroll is a Python module for the transcription of piano rolls to sheet music. It will very soon also be a command line tool.
 It can transcribe from a MIDI file or from a video of a piano roll. It finds
 the notes, the tempo, roughly separates the hands, and writes the result
 in a Lilypond_ file.
@@ -13,7 +13,7 @@ Use
 
 Unroll can be called from Python or from a terminal.
 
-To transcribe a MIDI file (terminal) ::
+To transcribe a MIDI file (terminal, coming soon) ::
 
     >>> unroll tiger_rag.mid quarter=1.1,10,0.02 score.ly
 
@@ -26,7 +26,7 @@ To transcribe a MIDI file (Python) ::
     keystrikes.transcribe('score.ly',
                           quarter_duration = [1.1,10,0.02])
 
-To transcribe a video (terminal) ::
+To transcribe a video (terminal, coming soon) ::
 
     >>> unroll limehouse_nights.mp4 focus=156,58,156,478
                transpose=26 quarter=1.1,10,0.02 score.ly
@@ -51,13 +51,17 @@ and then compile to beautiful sheet music  like this one.
 Installation
 --------------
 
-First method: get the source (on Github_ or PyPI_), unzip it into a directory, and in a terminal type ::
+First method: get the source (on Github_ or PyPI_), unzip it into a directory, and in a terminal type: ::
     
     (sudo) python setup.py install
+    
+
 
 Second method: with a pip command. ::
     
     (sudo) pip install unroll
+    
+
 
 Contribute
 -----------
