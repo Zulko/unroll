@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Unroll &mdash; unroll 0.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="unroll 0.1.0 documentation" href="#" />
+  
+
+  </head>
+  <body>
+  <div class="wrap">
+    
+      <div class="tocwrapper">
+        <div class="showtoc">(<span>Show Table Of Contents</span>)</div>
+        <div class="hidetoc">(<span>Hide Table Of Contents</span>)</div>
+        <div class="toc"><ul>
+<li><a class="reference internal" href="#">Unroll</a><ul>
+<li><a class="reference internal" href="#use">Use</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#contribute">Contribute</a></li>
+<li><a class="reference internal" href="#reference-manual">Reference Manual</a><ul>
+<li><a class="reference internal" href="#video">Video</a></li>
+<li><a class="reference internal" href="#midi">MIDI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+        <script>
+          var toc = $( ".toc" );
+          $( ".showtoc span" ).click(function() {
+            $( this ).parent().hide().next().show();
+            toc.slideDown( "fast" );
+          });
+          $( ".hidetoc span" ).click(function() {
+            $( this ).parent().hide().prev().show();
+            toc.slideUp( "fast" );
+          });
+        </script>
+      </div>
+    
+    
+
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="unroll">
+<h1>Unroll<a class="headerlink" href="#unroll" title="Permalink to this headline">¶</a></h1>
+<p>Unroll is a Python module for the transcription of piano rolls to sheet music. It will very soon also be a command line tool.
+It can transcribe from a MIDI file or from a video of a piano roll. It finds
+the notes, the tempo, roughly separates the hands, and writes the result
+in a <a class="reference external" href="http://www.lilypond.org">Lilypond</a> file.</p>
+<p>See this blog post for a more thorough presentation of the objectives and the method.</p>
+<div class="section" id="use">
+<h2>Use<a class="headerlink" href="#use" title="Permalink to this headline">¶</a></h2>
+<p>Unroll can be called from Python or from a terminal.</p>
+<p>To transcribe a MIDI file (terminal, coming soon)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">unroll</span> <span class="n">tiger_rag</span><span class="o">.</span><span class="n">mid</span> <span class="n">quarter</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mf">0.02</span> <span class="n">score</span><span class="o">.</span><span class="n">ly</span>
+</pre></div>
+</div>
+<p>To transcribe a MIDI file (Python)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">unroll</span> <span class="kn">import</span> <span class="n">midi2keystrikes</span>
+
+<span class="n">keystrikes</span> <span class="o">=</span> <span class="n">midi2keystrikes</span><span class="p">(</span><span class="s">&#39;tiger_rag.mid&#39;</span><span class="p">)</span>
+
+<span class="n">keystrikes</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s">&#39;score.ly&#39;</span><span class="p">,</span>
+                      <span class="n">quarter_duration</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mf">0.02</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>To transcribe a video (terminal, coming soon)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">unroll</span> <span class="n">limehouse_nights</span><span class="o">.</span><span class="n">mp4</span> <span class="n">focus</span><span class="o">=</span><span class="mi">156</span><span class="p">,</span><span class="mi">58</span><span class="p">,</span><span class="mi">156</span><span class="p">,</span><span class="mi">478</span>
+<span class="go">           transpose=26 quarter=1.1,10,0.02 score.ly</span>
+</pre></div>
+</div>
+<p>To transcribe a video (Python)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">unroll</span> <span class="kn">import</span> <span class="n">video2scan</span><span class="p">,</span> <span class="n">rollscan2keystrikes</span>
+
+<span class="n">scan</span> <span class="o">=</span> <span class="n">video2rollscan</span><span class="p">(</span><span class="n">videofile</span> <span class="o">=</span> <span class="s">&quot;limehouse_nights.mp4&quot;</span><span class="p">,</span>
+                      <span class="n">focus</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">im</span> <span class="p">:</span> <span class="n">im</span><span class="p">[[</span><span class="mi">156</span><span class="p">],</span><span class="mi">58</span><span class="p">:</span><span class="mi">478</span><span class="p">])</span>
+
+<span class="n">keystrikes</span> <span class="o">=</span> <span class="n">rollscan2keystrikes</span><span class="p">(</span><span class="n">scan</span><span class="p">)</span>
+<span class="n">keystrikes</span> <span class="o">=</span> <span class="n">ks</span><span class="o">.</span><span class="n">transposed</span><span class="p">(</span><span class="mi">26</span><span class="p">)</span> <span class="c"># transpose notes +26 tones</span>
+<span class="n">keystrikes</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="s">&#39;score.ly&#39;</span><span class="p">,</span>
+                      <span class="n">quarter_duration</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mf">0.02</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The output is a Lylipond file (<tt class="docutils literal"><span class="pre">score.ly</span></tt>) that you will need to edit to correct the mistakes (it can take a few hours with a good editor like <a class="reference external" href="http://frescobaldi.org/">Frescobaldi</a>),
+and then compile to beautiful sheet music  like this one.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>First method: get the source (on <a class="reference external" href="https://github.com/Zulko/unroll">Github</a> or <a class="reference external" href="https://pypi.python.org/pypi/unroll">PyPI</a>), unzip it into a directory, and in a terminal type:</p>
+<div class="highlight-python"><pre>(sudo) python setup.py install</pre>
+</div>
+<p>Second method: with a pip command.</p>
+<div class="highlight-python"><pre>(sudo) pip install unroll</pre>
+</div>
+</div>
+<div class="section" id="contribute">
+<h2>Contribute<a class="headerlink" href="#contribute" title="Permalink to this headline">¶</a></h2>
+<p>Unroll is a free open-source software originally written by <a class="reference external" href="https://github.com/Zulko/">Zulko</a> and released under the MIT licence.
+Everyone is welcome to contribute and give feedback on <a class="reference external" href="https://github.com/Zulko/unroll">Github</a>.</p>
+</div>
+<div class="section" id="reference-manual">
+<h2>Reference Manual<a class="headerlink" href="#reference-manual" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="unroll.KeyStrikes">
+<em class="property">class </em><tt class="descclassname">unroll.</tt><tt class="descname">KeyStrikes</tt><big>(</big><em>keystrikes</em><big>)</big><a class="headerlink" href="#unroll.KeyStrikes" title="Permalink to this definition">¶</a></dt>
+<dd><p class="rubric">Methods</p>
+<dl class="method">
+<dt id="unroll.KeyStrikes.find_quarter_duration">
+<tt class="descname">find_quarter_duration</tt><big>(</big><em>durations</em>, <em>report=False</em><big>)</big><a class="headerlink" href="#unroll.KeyStrikes.find_quarter_duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the quarter duration by computing the spectrum with
+different period durations and keeping the optimal duration.
+If report is True, a image of the specturm is saved.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="unroll.KeyStrikes.quantized">
+<tt class="descname">quantized</tt><big>(</big><em>quarter_duration</em><big>)</big><a class="headerlink" href="#unroll.KeyStrikes.quantized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a new KeyStrikes object obtained by quantizing the
+notes (regroups chords and corrects durations to the nearest
+eighth).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="unroll.KeyStrikes.separate_hands">
+<tt class="descname">separate_hands</tt><big>(</big><em>note=60</em><big>)</big><a class="headerlink" href="#unroll.KeyStrikes.separate_hands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Separates the hands by giving all the notes under <cite>note</cite> to
+the left hand. Returns 2 Keystrikes objects (left, right).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="unroll.KeyStrikes.to_lilystring">
+<tt class="descname">to_lilystring</tt><big>(</big><big>)</big><a class="headerlink" href="#unroll.KeyStrikes.to_lilystring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the Keystrikes object to lilypond format using music21</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="unroll.KeyStrikes.transcribe">
+<tt class="descname">transcribe</tt><big>(</big><em>filename</em>, <em>quarter_durations</em>, <em>hands_separation=60</em>, <em>report=False</em><big>)</big><a class="headerlink" href="#unroll.KeyStrikes.transcribe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transcribes the KeyStrike Object into piano sheet music.
+First it finds the tempo, then separates the hands, quantizes
+each hand and converts each to lilypond format.
+Finally it writes everything into a nive lilypond template,
+which can then be compiled with <tt class="docutils literal"><span class="pre">lilypond</span> <span class="pre">myfile.ly</span></tt></p>
+<p>quarter_durations must be of the form [min, max, step],
+with min&gt;1. For instance [2, 40, .1]. Then the duration will be
+chosen among 2, 2.1, 2.2 ... 40</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="unroll.KeyStrikes.transposed">
+<tt class="descname">transposed</tt><big>(</big><em>tones</em><big>)</big><a class="headerlink" href="#unroll.KeyStrikes.transposed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a new Keystrike object in which the notes n have
+been replaced by n+tone</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="video">
+<h3>Video<a class="headerlink" href="#video" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="unroll.video2rollscan">
+<tt class="descclassname">unroll.</tt><tt class="descname">video2rollscan</tt><big>(</big><em>videofile</em>, <em>focus</em>, <em>start=0</em>, <em>end=None</em>, <em>savefile=None</em><big>)</big><a class="headerlink" href="#unroll.video2rollscan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a scan of the roll from the video.
+Requires the pyton module MoviePy</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>video</strong> :</p>
+<blockquote>
+<div><p>Any videofile that MoviePy (FFMPEG) can read.</p>
+</div></blockquote>
+<p><strong>focus</strong> :</p>
+<blockquote>
+<div><p>A function ( f(image)-&gt;rectangular image ). For instance
+if the line of interest is defined by y=15 and x=10...230</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">focus</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">im</span> <span class="p">:</span> <span class="n">im</span><span class="p">[</span> <span class="p">[</span><span class="mi">15</span><span class="p">],</span> <span class="mi">10</span><span class="p">:</span><span class="mi">230</span> <span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><strong>start,end</strong> :</p>
+<blockquote>
+<div><p>Where to start and stop, each one either in seconds, or in
+format <cite>(minutes, seconds)</cite>. By default <cite>start=0</cite> and <cite>end</cite>
+is the end of the video.</p>
+</div></blockquote>
+<p><strong>savefile</strong> :</p>
+<blockquote>
+<div><p>If provided, the scan image will be saved under this name.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>A W*H*3 RGB picture of the piano roll made by stacking the focus</strong> :</p>
+<blockquote class="last">
+<div><p>lines of the different frames under one another.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="unroll.rollscan2keystrikes">
+<tt class="descclassname">unroll.</tt><tt class="descname">rollscan2keystrikes</tt><big>(</big><em>roll_image, column_widths=[1.1, 50, 0.01], threshold_keypress=0.8, report=False</em><big>)</big><a class="headerlink" href="#unroll.rollscan2keystrikes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts an image of a roll into a KeysStrikes object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>roll_image</strong> :</p>
+<blockquote>
+<div><p>A roll image obtained for instance with video2scan</p>
+</div></blockquote>
+<p><strong>column_widths</strong> :</p>
+<blockquote>
+<div><p>A triplet of the form [min, max, step] with min&gt;1
+for the search of the column width (in pixels) in the roll.</p>
+</div></blockquote>
+<p><strong>threshold_keypress</strong> :</p>
+<blockquote>
+<div><p>Parameter in range 0-1. A pixel is considered
+a hole if its luminosity is &lt; threshold_keypress*max_luminosity.
+If too small, notes strikes will be missed, if too high there
+will be false note strikes.</p>
+</div></blockquote>
+<p><strong>report</strong> :</p>
+<blockquote>
+<div><p>If provided, the spectrum used for column-width estimation
+is stored into a file.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>keystrikes</strong> :</p>
+<blockquote class="last">
+<div><p>A KeyStrikes object (conversion of the roll image).</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="midi">
+<h3>MIDI<a class="headerlink" href="#midi" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="unroll.midi2keystrikes">
+<tt class="descclassname">unroll.</tt><tt class="descname">midi2keystrikes</tt><big>(</big><em>filename</em>, <em>tracknum=0</em><big>)</big><a class="headerlink" href="#unroll.midi2keystrikes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a midifile (thanks to the package music21), returns a list
+of the keys hits:  [{&#8216;time&#8217;:15, &#8216;note&#8217;:50} ,{... ]</p>
+</dd></dl>
+
+<a href="https://github.com/Zulko/unroll">
+<img style="position: absolute; top: 0; right: 0; border: 0;"
+src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"
+alt="Fork me on GitHub"></a></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+
+    
+    <div class="footer">
+        &copy; Copyright 2014, Zulko.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
+    </div>
+  </div>
+  
+
+  </body>
+</html>
