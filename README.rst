@@ -8,8 +8,8 @@ the notes, the tempo, roughly separates the hands, and writes the result
 in a Lilypond file. In particular
 
 You can use it like this:
-
 ::
+    
     # TO TRANSCRIBE FROM A VIDEO
     
     from unroll import video2scan, rollscan2keystrikes
@@ -24,20 +24,25 @@ You can use it like this:
     from unroll import midi2keystrikes
     keystrikes = midi2keystrikes('tiger_rag.mid')
     ks.transcribe('score.ly', quarter_durations = [50,100,0.02])
+    
 
-Then you must edit ``score.ly`` to correct the mistakes and when you are done you compile it with ::
+Then you must edit ``score.ly`` to correct the mistakes and when you are done you compile it with
+::
     
     lilypond score.ly
+    
     
 Installation
 --------------
 
-Unroll can be installed by unzipping the source code in one directory and using this command: ::
+Unroll can be installed by unzipping the source code in one directory and using this command:
+::
     
     (sudo) python setup.py install
 
-You can also install it directly from the Python Package Index (PYPI_) with this command: ::
-    
+You can also install it directly from the Python Package Index (PYPI_) with this command:
+::
+        
     (sudo) pip unroll install
 
 
