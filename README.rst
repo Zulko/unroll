@@ -1,4 +1,3 @@
-
 Unroll
 =======
 
@@ -42,7 +41,7 @@ Unroll can be installed by unzipping the source code in one directory and using 
 You can also install it directly from the Python Package Index (PYPI_) with this command:
 ::
         
-    (sudo) pip unroll install
+    (sudo) pip install unroll
 
 
 Contribute
